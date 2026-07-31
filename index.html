@@ -27,6 +27,10 @@
   --ink-soft:#4E626C;
   --rule:#CFD9DD;
   --accent:#0B6E5F;
+  --ink-deep:#0E1B23;
+  --on-dark:#EEF3F5;
+  --on-dark-soft:#94A9B3;
+  --accent-bright:#45C9AC;
   --accent-quiet:#0B6E5F26;
 
   --display:"Literata",Georgia,serif;
@@ -59,6 +63,7 @@ a:focus-visible,button:focus-visible{
   border-radius:2px;
 }
 
+.section--first{border-top:none}
 .wrap{max-width:64rem;margin:0 auto;padding-inline:var(--pad)}
 
 /* ---------- utility type ---------- */
@@ -73,29 +78,30 @@ a:focus-visible,button:focus-visible{
 /* ---------- top bar ---------- */
 .topbar{
   position:sticky;top:0;z-index:50;
-  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  background:color-mix(in srgb,var(--ink-deep) 90%,transparent);
   backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--rule);
+  border-bottom:1px solid rgba(255,255,255,0.10);
 }
 .topbar__inner{
   display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
   min-height:3.25rem;
 }
-.topbar__name{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.topbar__name{color:var(--on-dark-soft);text-decoration:none;white-space:nowrap}
 .topbar nav{display:flex;gap:1.375rem;flex-wrap:wrap}
 .topbar nav a{
-  color:var(--ink-soft);text-decoration:none;
+  color:var(--on-dark-soft);text-decoration:none;
   padding-block:0.25rem;
   border-bottom:1px solid transparent;
   transition:color .18s ease,border-color .18s ease;
 }
-.topbar nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.topbar nav a:hover{color:var(--accent-bright);border-bottom-color:var(--accent-bright)}
 @media (max-width:34rem){.topbar__name{display:none}.topbar__inner{justify-content:center}}
 
 /* ---------- masthead ---------- */
-.masthead{padding-block:clamp(3rem,9vw,6rem) clamp(2.5rem,7vw,4.5rem)}
+.band{background:var(--ink-deep);color:var(--on-dark)}
+.masthead{padding-block:clamp(3rem,8vw,5.5rem) clamp(3rem,7vw,5rem)}
 .masthead__eyebrow{
-  color:var(--accent);
+  color:var(--accent-bright);
   line-height:1.7;
   margin:0 0 1.5rem;
 }
@@ -109,29 +115,42 @@ a:focus-visible,button:focus-visible{
 }
 .masthead__inst{
   margin:1rem 0 0;
-  color:var(--ink-soft);
+  color:var(--on-dark-soft);
   font-size:1rem;
 }
 .masthead__thesis{
-  margin:2rem 0 0;
+  margin:0;
   font-size:clamp(1.0625rem,1rem + 0.5vw,1.375rem);
   line-height:1.5;
   text-wrap:pretty;
 }
 
 .actions{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2.25rem}
+.masthead__lower{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:clamp(2rem,5vw,4rem);
+  align-items:end;
+  margin-top:clamp(1.75rem,4vw,2.75rem);
+}
+.masthead__portrait{width:clamp(9rem,17vw,13.5rem)}
+.masthead__portrait img{display:block;width:100%;height:auto;border:1px solid rgba(255,255,255,0.20)}
+@media (max-width:46rem){
+  .masthead__lower{grid-template-columns:1fr}
+  .masthead__portrait{width:9rem;order:-1}
+}
 .btn{
   font-family:var(--mono);
   font-size:0.75rem;letter-spacing:0.09em;text-transform:uppercase;font-weight:500;
   text-decoration:none;
   padding:0.7rem 1.15rem;
-  border:1px solid var(--ink);
-  background:var(--ink);color:var(--paper);
+  border:1px solid var(--on-dark);
+  background:var(--on-dark);color:var(--ink-deep);
   transition:background .18s ease,color .18s ease,border-color .18s ease;
 }
-.btn:hover{background:var(--accent);border-color:var(--accent)}
-.btn--ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
-.btn--ghost:hover{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn:hover{background:var(--accent-bright);border-color:var(--accent-bright);color:var(--ink-deep)}
+.btn--ghost{background:transparent;color:var(--on-dark);border-color:rgba(255,255,255,0.30)}
+.btn--ghost:hover{background:transparent;color:var(--accent-bright);border-color:var(--accent-bright)}
 
 
 /* ---------- sections ---------- */
@@ -166,27 +185,6 @@ h3{
 }
 h3:first-child{margin-top:0}
 
-/* ---------- portrait ---------- */
-.portrait{
-  float:right;
-  width:min(11.5rem,34%);
-  margin:0.35rem 0 1.5rem 2rem;
-  shape-outside:inset(0);
-}
-.portrait img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
-.portrait__slot{
-  aspect-ratio:3/4;
-  border:1px dashed var(--rule);
-  background:var(--paper-deep);
-  display:grid;place-content:center;text-align:center;
-  padding:1rem;
-  color:var(--ink-soft);
-  font-size:0.625rem;
-  line-height:1.8;
-}
-@media (max-width:34rem){
-  .portrait{float:none;width:9rem;margin:0 0 1.75rem}
-}
 
 /* ---------- data lists ---------- */
 .data{margin:0;display:grid;gap:0.9rem}
@@ -269,27 +267,32 @@ footer nav{display:flex;gap:1.25rem}
 
 <main id="top">
 
-  <section class="wrap masthead">
-    <p class="mono masthead__eyebrow">Robert F. and Sylvia T. Wagner Professor of Public Affairs</p>
-    <h1 class="masthead__name">Anthony T. Lo Sasso</h1>
-    <p class="masthead__inst">La Follette School of Public Affairs · University of Wisconsin–Madison</p>
-    <p class="masthead__thesis">I am an economist studying how government policy shapes private decisions in health care markets — insurance design, provider pricing and consolidation, pharmaceutical markets, and the intermediaries sitting in between.</p>
+  <div class="band">
+    <section class="wrap masthead">
+      <p class="mono masthead__eyebrow">Robert F. and Sylvia T. Wagner Professor of Public Affairs</p>
+      <h1 class="masthead__name">Anthony T. Lo Sasso</h1>
+      <p class="masthead__inst">La Follette School of Public Affairs · University of Wisconsin–Madison</p>
 
-    <div class="actions">
-      <a class="btn" href="cv.pdf">Download CV</a>
-      <a class="btn btn--ghost" href="mailto:tony.losasso@wisc.edu">Email me</a>
-    </div>
-  </section>
+      <div class="masthead__lower">
+        <div>
+          <p class="masthead__thesis">I am an economist studying how government policy shapes private decisions in health care markets — insurance design, provider pricing and consolidation, pharmaceutical markets, and the intermediaries sitting in between.</p>
+          <div class="actions">
+            <a class="btn" href="cv.pdf">Download CV</a>
+            <a class="btn btn--ghost" href="mailto:tony.losasso@wisc.edu">Email me</a>
+          </div>
+        </div>
+        <div class="masthead__portrait">
+          <img src="headshot.jpg" alt="Portrait of Anthony T. Lo Sasso">
+        </div>
+      </div>
+    </section>
+  </div>
 
   <div class="wrap">
 
-    <section class="section" id="about">
+    <section class="section section--first" id="about">
       <h2 class="mono section__label">About</h2>
       <div class="section__body">
-
-        <div class="portrait">
-          <img src="headshot.jpg" alt="Portrait of Anthony T. Lo Sasso">
-        </div>
 
         <p>Anthony T. Lo Sasso is the Robert F. and Sylvia T. Wagner Professor of Public Affairs in the La Follette School of Public Affairs at the University of Wisconsin, Madison. He is an economist and health policy scholar whose research focuses on the organization, regulation, and performance of U.S. health-care markets. His work examines health insurance design, provider pricing and consolidation, pharmaceutical markets, and the role of institutions and intermediaries in shaping costs, access, and welfare. He uses applied microeconomic theory and large administrative datasets to address questions central to health-care spending growth and market performance.</p>
 
